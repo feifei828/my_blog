@@ -1,0 +1,5 @@
+*.log
+*.pot
+*.pyc
+.idea/*
+.DS_Store
