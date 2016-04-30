@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from article.views import home, about, contact, blog_list, blog
+from article.views import home, about, contact, blog_list, blog_modify, blog_edit
 import settings
 
 urlpatterns = [
@@ -26,7 +26,10 @@ urlpatterns = [
     url(r'^about/$', about),
     url(r'^contact/$', contact),
     url(r'^blog_list/$', blog_list),
-    url(r'^modify/(.+)/$', blog, name='modify'),
+    url(r'^blog_list/(.+)/$', blog_list),
+    url(r'^modify/(.+)/$', blog_modify,),
+    url(r'^blog_edit/(.+)/$', blog_edit),
+
 
 
 ]

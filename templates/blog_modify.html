@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="content-main gallery_main">
+
+        <div class="gallery-main-inner">
+
+            <div class="col-md-12 gallery_title_main">
+                <div class="gallery_title">
+                    <h3>{{ blog.title }}</h3>
+                    <h4>{{ blog.tag }}</h4>
+                    <h5>{{ blog.date_time|date:"Y /m /d H:i" }}</h5>
+                </div>
+            </div>
+            <div>
+                {{ blog.content }}
+            </div>
+            <br/>
+            <div class="col-lg-offset-10">
+                <button type="submit" class="btn btn-info" onclick="edit()">编辑</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_js %}
+    <script>
+        function edit(){
+            window.location.href = '/blog_edit/' + {{ blog.id }} + '/'
+        }
+    </script>
+{% endblock %}
