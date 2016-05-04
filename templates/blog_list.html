@@ -12,28 +12,37 @@
                     <h4>BLOG LIST</h4>
                 </div><br style="clear:both;"/>
             </div>
+            <div class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="srch_value" placeholder="请输入博客标题">
+                </div>
+                <button class="btn btn-info" type="button" onclick="search()">搜索</button>
+            </div>
+            <br/>
             {% for article in articles %}
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                <div class="box london">
-                    <div class="info float-container">
-                        <div class="col-sm-12 london-title">
-                            <h3 class="text-uppercase"><a href="/modify/{{ article.id }}" >{{ article.title }}</a></h3>
-                            <h4 class="text-uppercase">{{ article.tag }}</h4>
-                        </div>
-                        <p id="blog_list_article">{{ article.content }}</p>
-                        <hr />
-                        <div class="col-sm-12 location-main">
-                            <div class="pull-left">
-                                <span>{{ article.date_time }}</span>
-                            </div>
-                            <div class="pull-right location">
-                                <i class="fa fa-map-marker fa-2x"></i><span>{% if not article.local %}未标记位置{% endif %}{{ article.local }}</span>
-                            </div>
 
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="box london">
+                            <div class="info float-container">
+                                <div class="col-sm-12 london-title">
+                                    <h3 class="text-uppercase"><a href="/modify/{{ article.id }}" >{{ article.title }}</a></h3>
+                                    <h4 class="text-uppercase">{{ article.tag }}</h4>
+                                </div>
+                                <p id="blog_list_article">{{ article.content }}</p>
+                                <hr />
+                                <div class="col-sm-12 location-main">
+                                    <div class="pull-left">
+                                        <span class="text-info">{{ article.date_time|date:"Y /m /d H:i" }}</span>
+                                    </div>
+                                    <div class="pull-right location">
+                                        <i class="fa fa-map-marker fa-2x"></i><span>{% if not article.local %}未标记位置{% endif %}{{ article.local }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             {% endfor%}
 
         </div>
@@ -45,39 +54,6 @@
     <script src="/static/js/jquery.masonry.3.2.1.min.js"></script>
 
     <script>
-        function init_masonry(){
-            var $container = $('#content');
-
-            $container.imagesLoaded( function(){
-                $container.masonry({
-                    itemSelector: '.box',
-                    isAnimated: true
-                });
-            });
-        }
-
-        $(document).ready(function(){
-
-            //Init jQuery Masonry layout
-            init_masonry();
-
-            // Magnific Popup
-            $('.gallery-images-container').magnificPopup({
-                delegate: 'a', // child items selector, by clicking on it popup will open
-                type: 'image',
-                gallery: {
-                    enabled: true,
-                    navigateByImgClick: true,
-                    preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-                },
-            });
-
-            //Select menu onchange
-            $("#collapsed-navbar").change(function () {
-                window.location = $(this).val();
-            });
-
-        });
         window.onload = function(){
             var text = document.getElementById('blog_list_article'),
                     str = text.innerHTML,
@@ -85,6 +61,16 @@
             if(str.length > textLeng ){
                 text .innerHTML = str.substring(0,textLeng )+"... ...";
             }
+        };
+        function search(){
+            var v = $("input[name='srch_value']").val();
+            if(v){
+                window.location.href = '/blog_list/' + v + '/'
+            }
+            else {
+                window.location.href = '/blog_list/'
+            }
         }
+
     </script>
 {% endblock %}

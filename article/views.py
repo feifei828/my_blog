@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 from .models import Article
+from my_blog.forms import BlogForm
 # Create your views here.
 
 
@@ -26,8 +27,11 @@ def contact(request):
     return render(request, 'contact.html')
 
 
-def blog_list(request):
-    articles = Article.objects.all()
+def blog_list(request, srch_val=None):
+    try:
+        articles = Article.objects.filter(title__contains=srch_val)
+    except:
+        articles = Article.objects.all()
     http_content = {
         'title': u'博客列表',
         'articles': articles,
@@ -35,11 +39,24 @@ def blog_list(request):
     return render(request, 'blog_list.html', http_content)
 
 
-def blog(request, blog_id=None):
+def blog_modify(request, blog_id=None):
     if blog_id is not None:
         blog = Article.objects.get(id=blog_id)
     http_content = {
         'title': blog.title,
         'blog': blog
     }
-    return render(request, 'blog_form.html', http_content)
+    return render(request, 'blog_modify.html', http_content)
+
+
+def blog_edit(request, blog_id=None):
+    if blog_id is not None:
+        blog = Article.objects.get(id=blog_id)
+
+    form = BlogForm(blog.title)
+
+    http_content = {
+        'title': u'编辑-{}'.format(blog.title),
+        'form': form,
+    }
+    return render(request, 'blog_edit.html', http_content)
