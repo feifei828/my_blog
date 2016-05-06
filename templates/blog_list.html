@@ -33,10 +33,10 @@
                                 <hr />
                                 <div class="col-sm-12 location-main">
                                     <div class="pull-left">
-                                        <span class="text-info">{{ article.date_time|date:"Y /m /d H:i" }}</span>
+                                        <span class="text-info">{{ article.update_time|date:"Y /m /d H:i" }}</span>
                                     </div>
                                     <div class="pull-right location">
-                                        <i class="fa fa-map-marker fa-2x"></i><span>{% if not article.local %}未标记位置{% endif %}{{ article.local }}</span>
+                                        <i class="fa fa-map-marker fa-2x"></i><span>{% if not article.city %}未标记位置{% endif %}{{ article.city.province.province_name }}--{{ article.city }}</span>
                                     </div>
                                 </div>
                             </div>

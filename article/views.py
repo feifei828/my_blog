@@ -2,7 +2,6 @@
 
 from django.shortcuts import render
 from .models import Article
-from my_blog.forms import BlogForm
 # Create your views here.
 
 
@@ -20,11 +19,15 @@ def home(request):
 
 
 def about(request):
+
     return render(request, 'about.html')
 
 
 def contact(request):
-    return render(request, 'contact.html')
+    http_content = {
+        'title': u'与我联系'
+    }
+    return render(request, 'contact.html', http_content)
 
 
 def blog_list(request, srch_val=None):
@@ -49,14 +52,5 @@ def blog_modify(request, blog_id=None):
     return render(request, 'blog_modify.html', http_content)
 
 
-def blog_edit(request, blog_id=None):
-    if blog_id is not None:
-        blog = Article.objects.get(id=blog_id)
-
-    form = BlogForm(blog.title)
-
-    http_content = {
-        'title': u'编辑-{}'.format(blog.title),
-        'form': form,
-    }
-    return render(request, 'blog_edit.html', http_content)
+def backend(request):
+    return render(request, 'backend_home.html')
