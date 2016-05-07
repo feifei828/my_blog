@@ -14,41 +14,52 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <form class="form-horizontal" method="post" action="#">
-
+                    <form class="form-horizontal" role="form" method="POST" action="">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="您的姓名..." value="">
+                            <input type="text" class="form-control" name="name" placeholder="您的姓名..." value="{{ form.name.value }}"/>
+                            <div class="text-danger">
+                                <p>{{ form.name.errors }}</p>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="您的邮箱..." value="">
+                            <input type="email" class="form-control" name="email" placeholder="您的邮箱..." value="{{ form.email.value }}"/>
+                            <div class="text-danger">
+                                <p>{{ form.email.errors }}</p>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="subject" name="subject" placeholder="主题..." value="">
+                            <input type="text" class="form-control" name="title" placeholder="主题..." value="{{ form.title.value }}"/>
+                            <div class="text-danger">
+                                <p>{{ form.title.errors }}</p>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <textarea class="form-control" rows="4" name="message" placeholder="内容..."></textarea>
+                            <textarea class="form-control" rows="4" name="content" placeholder="内容..." >{{ form.content.value|safe }}</textarea>
+                            <div class="text-danger">
+                                <p>{{ form.content.errors }}</p>
+                            </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="control-label">
                             <input id="submit" name="submit" type="submit" value="发送" class="btn view_more btn-submit">
                         </div>
 
                     </form>
                 </div>
             </div>
-
+            <br/>
             <div class="row">
                 <div class="col-md-10">
 
                     <div class="col-md-12 contact_title">
-                        与我联系
+                         其它方式
                     </div>
 
                     <div class="col-md-12 contact_sub_title">
-                        随时与我联系提出建议
+                        使用其它方式随时与我联系提出建议
                     </div>
 
                     <div class="col-md-12 contact_text">
@@ -56,13 +67,13 @@
                     </div>
 
                     <div class="col-md-12 contact_info">
-                        <a href="mailto:info@company.com" class="contact-info-link">
+                        <a href="mailto:401662148@qq.com.com" class="contact-info-link">
                             <i class="fa fa-envelope contact-fa"></i>401662148@qq.com.com
                         </a><br/>
-                        <a href="+1234567890" class="contact-info-link">
+                        <a href="/contact" class="contact-info-link">
                             <i class="fa fa-qq contact-fa"></i>401662148
                         </a><br/>
-                        <a href="+0987654321" class="contact-info-link">
+                        <a href="/contact" class="contact-info-link">
                             <i class="fa fa-phone contact-fa"></i>18842528379
                         </a><br/>
                     </div>
