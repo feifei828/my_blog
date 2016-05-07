@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-main contact-content">
+        <div class="contact-content-upper">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="gallery_title">
+                        <h3>与我联系</h3>
+                        <h4>发送信息马上与我联系</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+
+                    <div class="col-md-12 contact_text">
+                        信息发送失败, 请重新发送, 或者您可以选择其它方式与我们联系
+                    </div>
+
+                    <div class="col-md-12 contact_info">
+                        <a href="mailto:401662148@qq.com" class="contact-info-link">
+                            <i class="fa fa-envelope contact-fa"></i>401662148@qq.com
+                        </a><br/>
+                        <a href="/contact" class="contact-info-link">
+                            <i class="fa fa-qq contact-fa"></i>401662148
+                        </a><br/>
+                        <a href="/contact" class="contact-info-link">
+                            <i class="fa fa-phone contact-fa"></i>18842528379
+                        </a><br/>
+                    </div>
+
+                    <div class="col-md-12">
+                        <span><i class="fa fa-weibo social-icon rss_icon"></i></span>
+                        <span><i class="fa fa-github social-icon twitter_icon"></i></span>
+                        <span><i class="fa fa-qq social-icon facebook_icon"></i></span>
+                    </div>
+
+                </div> <!-- .contact_right -->
+
+            </div> <!-- .row -->
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div id="google-map"></div>
+            </div>
+        </div>
+
+    </div> <!-- .contact-content -->
+{% endblock %}

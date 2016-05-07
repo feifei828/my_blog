@@ -56,3 +56,13 @@ class BlogTags(models.Model):
 
     article = models.ForeignKey(Article)
     tag = models.ForeignKey(Tags)
+
+
+class Message(models.Model):
+    class Meta:
+        verbose_name = u'消息'
+
+    name = models.CharField(verbose_name=u'姓名', max_length=128)
+    email = models.EmailField(verbose_name=u"个人邮箱", max_length=100)
+    title = models.CharField(verbose_name=u'主题', max_length=128)
+    content = models.TextField(verbose_name=u'信息内容', blank=True)
