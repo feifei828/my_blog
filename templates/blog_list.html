@@ -27,7 +27,9 @@
                             <div class="info float-container">
                                 <div class="col-sm-12 london-title">
                                     <h3 class="text-uppercase"><a href="/modify/{{ article.id }}" >{{ article.title }}</a></h3>
-                                    <h4 class="text-uppercase">{{ article.tag.all }}</h4>
+                                    {% for t in article.tag.all %}
+                                        <h4 class="col-md-1 text-warning text-uppercase">{{ t }}</h4>
+                                    {% endfor %}
                                 </div>
                                 <p id="blog_list_article">{{ article.content }}</p>
                                 <hr />

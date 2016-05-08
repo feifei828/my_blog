@@ -2,10 +2,11 @@
 
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.contrib import messages
 from .models import Article
 from .models import Message
+from .models import Comment
 from .forms import MessageForm
+from .forms import CommentForm
 # Create your views here.
 
 
@@ -78,9 +79,26 @@ def blog_list(request, srch_val=None):
 def blog_modify(request, blog_id=None):
     if blog_id is not None:
         blog = Article.objects.get(id=blog_id)
+        comments = Comment.objects.filter(article=blog)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            contact_info = form.cleaned_data
+            contact_info['article'] = blog
+            try:
+                message = Comment.objects.create(**contact_info)
+                message.save()
+                return redirect('/contact_success')
+            except:
+                return redirect('/contact_error')
+    else:
+        form = CommentForm()
+
     http_content = {
         'title': blog.title,
-        'blog': blog
+        'blog': blog,
+        'comments': comments,
+        'form': form,
     }
     return render(request, 'blog_modify.html', http_content)
 
