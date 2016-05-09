@@ -1,0 +1,38 @@
+{% extends 'log_base.html' %}
+{% block log-content %}
+<div class="login-form">
+    <div class="close"> </div>
+    <div class="head-info">
+        <label class="lbl-1"> </label>
+        <label class="lbl-2"> </label>
+        <label class="lbl-3"> </label>
+    </div>
+    <div class="clear"> </div>
+    <div class="avtar">
+        <img src="/static/images/admin.png" />
+    </div>
+    <br/>
+    {% if err_msg %}
+        <div class="alert alert-danger">
+            {{ err_msg }}
+        </div>
+    {% endif %}
+    <form role="form" method="POST" action="">
+        <input type="text" class="text" name="username" value="username" onfocus="this.value = '';">
+        <div class="key">
+            <input type="password" name="password" value="" onfocus="this.value = '';">
+        </div>
+        <input id="submit" name="submit" type="submit" value="LOGIN" >
+    </div>
+    </form>
+</div>
+{% endblock %}
+{% block more-script %}
+<script>$(document).ready(function(c) {
+    $('.close').on('click', function(c){
+        window.location.href = '/home/'
+
+    });
+});
+</script>
+{% endblock %}

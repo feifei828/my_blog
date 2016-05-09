@@ -27,7 +27,7 @@
                 <i class="glyphicon glyphicon-align-justify"></i>
             </button>
             <!-- brand -->
-            <a href="#" class="navbar-brand text-lt">
+            <a href="/backend_home" class="navbar-brand text-lt">
                 <i class="fa fa-btc"></i>
                 <img src="/static/images/logo.png" alt="." class="hide">
                 <span class="hidden-folded m-l-xs">BLOG管理</span>
@@ -54,10 +54,22 @@
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle clear">
                         <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
-                        <img src="/static/images/a0.jpg" alt="...">
+                        <img src="/static/images/admin.png" alt="...">
                         <i class="on md b-white bottom"></i>
                         </span>
-                        <span class="hidden-sm hidden-md">John.Smith</span>
+                        <span class="hidden-sm hidden-md">欢迎您:{{ request.user }}</span>
+                        <ul class="dropdown-menu animated fadeInRight w">
+                            <li>
+                                <a href>
+                                    <span>设置</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="/logout">退出</a>
+                            </li>
+                        </ul>
+                        <!-- / dropdown -->
                     </a>
                 </li>
             </ul>
@@ -76,15 +88,14 @@
                     <div class="dropdown wrapper">
                         <a>
                             <span class="thumb-lg w-auto-folded avatar m-t-sm">
-                            <img src="/static/images/a0.jpg" class="img-full" alt="...">
+                            <img src="/static/images/admin.png" class="img-full" alt="...">
                             </span>
                         </a>
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
                             <span class="clear">
                                 <span class="block m-t-sm">
-                                    <strong class="font-bold text-lt">John.Smith</strong>
+                                    <strong class="font-bold text-lt">{{ request.user }}</strong>
                                 </span>
-                                <span class="text-muted text-xs block">Art Director</span>
                             </span>
                         </a>
                     </div>
@@ -99,32 +110,10 @@
                             <span>Navigation</span>
                         </li>
                         <li>
-                            <a href class="auto">
-                                <span class="pull-right text-muted">
-                                    <i class="fa fa-fw fa-angle-right text"></i>
-                                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                                </span>
+                            <a href="/backend_blog_list">
                                 <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
-                                <span class="font-bold">Dashboard</span>
+                                <span class="font-bold">博客列表</span>
                             </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a>
-                                        <span>Dashboard</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <span>Dashboard v1</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <b class="label bg-info pull-right">N</b>
-                                        <span>Dashboard v2</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <li>
@@ -416,6 +405,13 @@
     <!-- / menu -->
 
     <!-- content -->
+
+    <div class="col-md-10">
+        <div class="col-md-5">
+            <h1 class="page-header">{{ title }}</h1>
+        </div>
+    </div>
+
     {% block content %}
     {% endblock content %}
 

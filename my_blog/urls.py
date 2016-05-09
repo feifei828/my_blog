@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from article.views import home, about, contact, blog_list, blog_modify, backend, contact_success, contact_error
+from article.views import home, about, contact, blog_list, blog_modify, backend_home, \
+                            contact_success, contact_error, blog_login, blog_logout, \
+                            backend_blog_list, backend_blog_modify
 import settings
 
 urlpatterns = [
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    url(r'^login/$', blog_login),
+    url(r'^logout/$', blog_logout),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^home/$', home),
     url(r'^about/$', about),
@@ -30,5 +34,8 @@ urlpatterns = [
     url(r'^blog_list/$', blog_list),
     url(r'^blog_list/(.+)/$', blog_list),
     url(r'^modify/(.+)/$', blog_modify,),
-    url(r'^backend/$', backend),
+    url(r'^backend_home/$', backend_home),
+    url(r'^backend_blog_list/$', backend_blog_list),
+    url(r'^backend_blog_modify/(.+)$', backend_blog_modify),
+
 ]
