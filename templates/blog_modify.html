@@ -17,9 +17,45 @@
                 {{ blog.content }}
             </div>
             <br/>
-            <div class="col-lg-offset-10">
-                <button type="submit" class="btn btn-info" onclick="edit()">编辑</button>
+            <div class="line"></div>
+            <div class="row">
+                <br/>
+                <div class="col-md-10">
+                    {% for comment in comments %}
+                        <label class="text-info">{{ comment.email }}的评论:</label>
+                        <p>{{ comment.comment }}</p>
+                        <br/><div class="line"></div><br/>
+                    {% endfor %}
+                </div>
             </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <form class="form-horizontal" role="form" method="POST" action="">
+
+                        <div class="form-group">
+                            <textarea class="form-control" rows="4" name="comment" placeholder="添加评论..." >{{ form.comment.value }}</textarea>
+                            <div class="text-danger">
+                                <p>{{ form.comment.errors }}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <input type="email" class="form-control" name="email" placeholder="您的邮箱..." value="{{ form.email.value }}"/>
+                            <div class="text-danger">
+                                <p>{{ form.email.errors }}</p>
+                            </div>
+                        </div>
+
+                        <div class="control-label">
+                            <input id="submit" name="submit" type="submit" value="发送" class="btn view_more btn-submit">
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 
