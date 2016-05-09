@@ -8,8 +8,12 @@
                     <div class="banner-main-home-text">
                         <div class="heading">
                             <h1>{{ article.title }}</h1>
-                            <p class="text-uppercase">{{ article.tag }}</p>
-                            <p class="text-uppercase">{{ article.date_time|date:"Y /m /d H:i" }}</p>
+                            {% for tag in article.tag.all %}
+                                <p class="col-md-2 text-warning text-uppercase">{{ tag }}</p>
+                            {% endfor %}
+                            <div class="col-md-10">
+                                <p class="text-uppercase">{{ article.update_time|date:"Y /m /d H:i" }}</p>
+                            </div>
                         </div>
                         <div class="desc" >
                             <p id="blog_article">{{ article.content }}</p>

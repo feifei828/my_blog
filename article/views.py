@@ -2,12 +2,40 @@
 
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login, logout
 from .models import Article
 from .models import Message
 from .models import Comment
-from .forms import MessageForm
-from .forms import CommentForm
+from .forms import MessageForm, CommentForm, ArticleForm
 # Create your views here.
+
+
+def blog_login(request):
+    err_msg = ''
+    if request.user.is_authenticated():
+        return redirect('/backend_home')
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        session = authenticate(username=username, password=password)
+        if session is not None:
+            login(request, session)
+            return redirect('/backend_home')
+
+        err_msg = u'用户名或密码错误'
+
+    http_content = {
+        'err_msg': err_msg,
+    }
+
+    return render(request, 'login.html', http_content)
+
+
+def blog_logout(request):
+    logout(request)
+    return redirect('/home')
 
 
 def home(request):
@@ -19,7 +47,7 @@ def home(request):
     http_content = {
          'article': article
     }
-
+    print(request.user)
     return render(request, 'home.html', http_content)
 
 
@@ -103,5 +131,34 @@ def blog_modify(request, blog_id=None):
     return render(request, 'blog_modify.html', http_content)
 
 
-def backend(request):
-    return render(request, 'backend_home.html')
+def backend_home(request):
+    http_content = {
+        'title': u'首页'
+    }
+    return render(request, 'backend_home.html', http_content)
+
+
+def backend_blog_list(request):
+    articles = Article.objects.all()
+    http_content = {
+        'title': u'博客列表',
+        'articles': articles,
+    }
+    return render(request, 'backend_blog_list.html', http_content)
+
+
+def backend_blog_modify(request, article_id=None):
+    if article_id is not None:
+        article = Article.objects.get(id=article_id)
+
+        form_content = {
+            'content': article.content
+        }
+    form = ArticleForm(form_content)
+    print(form)
+    http_content = {
+        'title': u'博客详情',
+        'article': article,
+        'form': form,
+    }
+    return render(request, 'backend_blog_modify.html', http_content)

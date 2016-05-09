@@ -61,7 +61,7 @@ class BlogTags(models.Model):
 class Comment(models.Model):
     class Meata:
         verbose_name = u'博客评论'
-    article = models.ForeignKey(Article, verbose_name=u'关联博客')
+    article = models.ForeignKey(Article, verbose_name=u'关联博客',related_name='comment')
     email = models.EmailField(verbose_name=u'评论所用邮箱', max_length=100)
     comment = models.TextField(verbose_name=u'评论内容', blank=True, null=True)
 

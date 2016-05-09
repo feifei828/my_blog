@@ -9,8 +9,12 @@
             <div class="col-md-12 gallery_title_main">
                 <div class="gallery_title">
                     <h3>{{ blog.title }}</h3>
-                    <h4>{{ blog.tag }}</h4>
-                    <h5>{{ blog.date_time|date:"Y /m /d H:i" }}</h5>
+                    {% for t in blog.tag.all %}
+                        <h4 class="col-md-2">{{ t }}</h4>
+                    {% endfor %}
+                    <div class="col-md-10">
+                        <h5>{{ blog.update_time|date:"Y /m /d H:i" }}</h5>
+                    </div>
                 </div>
             </div>
             <div>

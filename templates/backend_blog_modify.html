@@ -1,0 +1,44 @@
+{% extends 'base_backend.html' %}
+
+{% block content %}
+    <form class="form-horizontal" role="form" method="POST" action="">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ article.title }}
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label class="col-md-1">标签:</label>
+                                {% for t in article.tag.all %}
+                                    <div class="col-md-1">{{ t }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label class="col-md-2">更新日期:</label>
+                                <div class="col-md-2">
+                                    {{ article.update_time|date:"Y /m /d H:i" }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <textarea class="col-md-8" rows="10" name="content" placeholder="博客内容..." >{{ form.content.value }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="control-label">
+                            <input id="submit" name="submit" type="submit" value="保存" class="btn view_more btn-submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock content %}

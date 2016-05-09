@@ -1,0 +1,45 @@
+{% extends 'base_backend.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10">
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        BLOG列表
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>标题</th>
+                                <th>最后更新时间</th>
+                                <th>是否至于首页</th>
+                                <th>位置</th>
+                                <th>评论数</th>
+                            </tr>
+                        </thead>
+                        {% for article in articles %}
+                            <tbody>
+                            <tr>
+                                <td>{{ article.id }}</td>
+                                <td><a href="/backend_blog_modify/{{ article.id }}">{{ article.title }}</a></td>
+                                <td>{{ article.update_time|date:"Y /m /d H:i"}}</td>
+                                <td>{{ article.is_topic }}</td>
+                                <td>{{ article.city.province.province_name }}-{{ article.city }}</td>
+                                <td>{{ article.comment.all.count }}</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                        <tbody>
+                            <tr>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
