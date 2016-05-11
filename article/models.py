@@ -72,5 +72,7 @@ class Message(models.Model):
 
     name = models.CharField(verbose_name=u'姓名', max_length=128)
     email = models.EmailField(verbose_name=u"个人邮箱", max_length=100)
+    create_time = models.DateTimeField(verbose_name=u'发送时间', auto_now_add=True)
     title = models.CharField(verbose_name=u'主题', max_length=128)
     content = models.TextField(verbose_name=u'信息内容', blank=True)
+    is_reply = models.BooleanField(verbose_name=u'是否回复', default=False)

@@ -10,21 +10,19 @@
                             <tr>
                                 <th>ID</th>
                                 <th>标题</th>
-                                <th>最后更新时间</th>
-                                <th>是否至于首页</th>
-                                <th>位置</th>
-                                <th>评论数</th>
+                                <th>创建时间</th>
+                                <th>邮箱</th>
+                                <th>是否反馈</th>
                             </tr>
                         </thead>
-                        {% for article in articles %}
+                        {% for message in messages %}
                             <tbody>
                             <tr>
-                                <td>{{ article.id }}</td>
-                                <td><a href="/backend_blog_modify/{{ article.id }}">{{ article.title }}</a></td>
-                                <td>{{ article.update_time|date:"Y /m /d H:i"}}</td>
-                                <td>{% if article.is_topic %}是{% else %}否{% endif %}</td>
-                                <td>{{ article.city.province.province_name }}-{{ article.city }}</td>
-                                <td>{{ article.comment.all.count }}</td>
+                                <td>{{ message.id }}</td>
+                                <td><a href="/backend_message_modify/{{ message.id }}">{{ message.title }}</a></td>
+                                <td>{{ message.create_time|date:"Y /m /d H:i"}}</td>
+                                <td>{{ message.email }}</td>
+                                <td>{% if message.is_reply %}是{% else %}否{% endif %}</td>
                             </tr>
                         </tbody>
                         {% endfor %}

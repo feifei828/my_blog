@@ -5,16 +5,28 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        {{ article.title }}
-                    </div>
                     <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label class="col-md-1">标题:</label>
+                                <input type="text" class="col-md-5" name="title" value="{{ form.title.value }}">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-10">
                                 <label class="col-md-1">标签:</label>
                                 {% for t in article.tag.all %}
-                                    <div class="col-md-1">{{ t }}</div>
+                                    <input class="col-md-1 btn btn-success" name="tag" value="{{ t }}">
                                 {% endfor %}
+                                <label class="col-md-1"></label>
+                                <button class="col-md-1 btn btn-info">新增</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label class="col-md-2">是否置于首页:</label>
+                                <input class="checkbox-inline" name="is_topic" type="checkbox" {% if form.is_topic.value %} checked="checked"{% endif %}>
+                                <p class="text text-danger">{{ form.is_topic.errors }}</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -27,14 +39,17 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-10">
-                                <textarea class="col-md-8" rows="10" name="content" placeholder="博客内容..." >{{ form.content.value }}</textarea>
+                            <div class="col-md-12">
+                                <textarea class="col-md-12" rows="40" name="content" placeholder="博客内容..." >{{ form.content.value }}</textarea>
                             </div>
                         </div>
 
                         <div class="control-label">
-                            <input id="submit" name="submit" type="submit" value="保存" class="btn view_more btn-submit">
+                            <input type="submit" value="保存" class="btn btn-info">
                         </div>
+                    <br/>
+                    <br/>
+                    <br/>
                     </div>
                 </div>
             </div>
@@ -42,3 +57,5 @@
     </form>
 
 {% endblock content %}
+{% block more_script %}
+{% endblock %}

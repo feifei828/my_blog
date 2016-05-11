@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Article
 from .models import Message
 from .models import Comment
-from .forms import MessageForm, CommentForm, ArticleForm
+from .forms import MessageForm, CommentForm, ArticleForm, MessageReplyForm
 # Create your views here.
 
 
@@ -47,7 +47,6 @@ def home(request):
     http_content = {
          'article': article
     }
-    print(request.user)
     return render(request, 'home.html', http_content)
 
 
@@ -151,14 +150,77 @@ def backend_blog_modify(request, article_id=None):
     if article_id is not None:
         article = Article.objects.get(id=article_id)
 
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article_info = form.cleaned_data
+            for k, v in article_info.iteritems():
+                setattr(article, k, v)
+            article.save()
+    else:
         form_content = {
-            'content': article.content
+            'title': article.title,
+            'is_topic': article.is_topic,
+            'content': article.content,
         }
-    form = ArticleForm(form_content)
-    print(form)
+        form = ArticleForm(form_content)
     http_content = {
         'title': u'博客详情',
         'article': article,
         'form': form,
     }
     return render(request, 'backend_blog_modify.html', http_content)
+
+
+def backend_blog_create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article_info = form.cleaned_data
+            try:
+                article = Article.objects.create(**article_info)
+                article.save()
+                return redirect('/backend_blog_list')
+            except:
+                 return redirect('/backend_blog_create')
+
+    return render(request, 'backend_blog_modify.html')
+
+
+def backend_messages(request):
+    messages = Message.objects.all()
+    http_content = {
+        'title': u'收到邮件',
+        'messages': messages,
+    }
+    return render(request, 'backend_messages.html', http_content)
+
+
+def backend_messages_modify(request, message_id=None):
+    if message_id is not None:
+        message = Message.objects.get(id=message_id)
+
+    if request.method == 'POST':
+        form = MessageReplyForm(request.POST)
+        if form.is_valid():
+            message_info = form.cleaned_data
+            print(message_info)
+            for k, v in message_info.iteritems():
+                setattr(message, k, v)
+            message.save()
+    else:
+        form_content = {
+            'is_reply': message.is_reply
+        }
+        form = MessageReplyForm(form_content)
+
+    http_content = {
+        'title': u'消息详情',
+        'message': message,
+        'form': form
+    }
+    return render(request, 'backend_message_modify.html', http_content)
+
+
+def tag_choices(request):
+    pass

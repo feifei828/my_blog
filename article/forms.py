@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from django import forms
+from .models import Article
 
 
 class MessageForm(forms.Form):
@@ -18,4 +19,15 @@ class CommentForm(forms.Form):
 
 
 class ArticleForm(forms.Form):
+    title = forms.CharField(label=u'博客标题', initial='')
+    is_topic = forms.BooleanField(label=u'是否置于首页', initial='', required=False)
     content = forms.CharField(label=u'博客内容', initial='')
+
+    def clean(self):
+        data = self.cleaned_data
+        if data['is_topic'] and Article.objects.filter(is_topic=True).count() >= 1:
+            self.add_error('is_topic', u'只能有一篇文章在首页')
+
+
+class MessageReplyForm(forms.Form):
+    is_reply = forms.BooleanField(label=u'是否回复', initial='', required=False)

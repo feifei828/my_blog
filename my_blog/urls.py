@@ -18,7 +18,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from article.views import home, about, contact, blog_list, blog_modify, backend_home, \
                             contact_success, contact_error, blog_login, blog_logout, \
-                            backend_blog_list, backend_blog_modify
+                            backend_blog_list, backend_blog_modify, backend_blog_create, \
+                            tag_choices, backend_messages, backend_messages_modify
 import settings
 
 urlpatterns = [
@@ -37,5 +38,8 @@ urlpatterns = [
     url(r'^backend_home/$', backend_home),
     url(r'^backend_blog_list/$', backend_blog_list),
     url(r'^backend_blog_modify/(.+)$', backend_blog_modify),
-
+    url(r'^backend_blog_create/$', backend_blog_create),
+    url(r'^backend_messages/$', backend_messages),
+    url(r'^backend_message_modify/(.+)$', backend_messages_modify),
+    url(r'^tag_choice/$', tag_choices, name='choices'),
 ]
