@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import Article
 from .models import Message
-from .models import Comment
+from .models import Comment, Tags
 from .forms import MessageForm, CommentForm, ArticleForm, MessageReplyForm
 # Create your views here.
 
@@ -223,4 +223,5 @@ def backend_messages_modify(request, message_id=None):
 
 
 def tag_choices(request):
-    pass
+    tags = Tags.objects.all()
+

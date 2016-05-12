@@ -15,18 +15,19 @@
                         <div class="form-group">
                             <div class="col-md-10">
                                 <label class="col-md-1">标签:</label>
-                                {% for t in article.tag.all %}
-                                    <input class="col-md-1 btn btn-success" name="tag" value="{{ t }}">
-                                {% endfor %}
-                                <label class="col-md-1"></label>
-                                <button class="col-md-1 btn btn-info">新增</button>
+                                <select class="col-md-5 js-example-basic-multiple" multiple="multiple">
+                                    {% for t in article.tag.all %}
+                                        <option value="{{ t.id }}" selected="selected">{{ t }}</option>a
+                                    {% endfor %}
+                                    <option value="WY">Wyoming</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10">
                                 <label class="col-md-2">是否置于首页:</label>
-                                <input class="checkbox-inline" name="is_topic" type="checkbox" {% if form.is_topic.value %} checked="checked"{% endif %}>
-                                <p class="text text-danger">{{ form.is_topic.errors }}</p>
+                                <input class="col-md-1" name="is_topic" type="checkbox" {% if form.is_topic.value %} checked="checked"{% endif %}>
+                                <p class="col-md-1 text text-danger">{{ form.is_topic.errors }}</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -58,4 +59,8 @@
 
 {% endblock content %}
 {% block more_script %}
+    <script type="text/javascript" src="http://7d9qwy.com2.z0.glb.qiniucdn.com/js/select2.min.js"></script>
+    <script type="text/javascript">
+    $(".js-example-basic-multiple").select2();
+    </script>
 {% endblock %}
