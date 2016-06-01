@@ -19,7 +19,10 @@ from django.contrib import admin
 from article.views import home, about, contact, blog_list, blog_modify, backend_home, \
                             contact_success, contact_error, blog_login, blog_logout, \
                             backend_blog_list, backend_blog_modify, backend_blog_create, \
-                            tag_choices, backend_messages, backend_messages_modify
+                            backend_messages, backend_messages_modify, backend_tags, \
+                            backend_admin, backend_tags_create, backend_tag_delete, \
+                            backend_admin_save, backend_tag_choice
+
 import settings
 
 urlpatterns = [
@@ -41,5 +44,10 @@ urlpatterns = [
     url(r'^backend_blog_create/$', backend_blog_create),
     url(r'^backend_messages/$', backend_messages),
     url(r'^backend_message_modify/(.+)$', backend_messages_modify),
-    url(r'^tag_choice/$', tag_choices, name='choices'),
+    url(r'^backend_tags/$', backend_tags),
+    url(r'^backend_tags_create/$', backend_tags_create),
+    url(r'^backend_tag_delete/(.+)/$', backend_tag_delete),
+    url(r'^backend_tag_choice/$', backend_tag_choice),
+    url(r'^backend_admin/$', backend_admin),
+    url(r'^backend_admin_save/(.+)/$', backend_admin_save),
 ]

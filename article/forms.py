@@ -31,3 +31,12 @@ class ArticleForm(forms.Form):
 
 class MessageReplyForm(forms.Form):
     is_reply = forms.BooleanField(label=u'是否回复', initial='', required=False)
+
+
+class PersonForm(forms.Form):
+    name = forms.CharField(label=u'姓名', initial='')
+    email = forms.EmailField(label=u'个人邮箱', initial='')
+    phone = forms.CharField(label=u'电话号码', initial='')
+    qq = forms.CharField(label=u'qq', initial='', required=False)
+    weibo = forms.CharField(label=u'微博地址', initial='', required=False)
+    github = forms.CharField(label=u'github', initial='', required=False)

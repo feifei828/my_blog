@@ -76,3 +76,22 @@ class Message(models.Model):
     title = models.CharField(verbose_name=u'主题', max_length=128)
     content = models.TextField(verbose_name=u'信息内容', blank=True)
     is_reply = models.BooleanField(verbose_name=u'是否回复', default=False)
+
+
+class Person(models.Model):
+    class Meta:
+        verbose_name = u'个人信息'
+
+    name = models.CharField(verbose_name=u'姓名', max_length=128)
+    email = models.EmailField(verbose_name=u'个人邮箱', max_length=100)
+    phone = models.CharField(verbose_name=u'电话号码', max_length=20)
+    qq = models.CharField(verbose_name=u'qq', max_length=20)
+    weibo = models.CharField(verbose_name=u'微博地址', max_length=100)
+    github = models.CharField(verbose_name=u'github', max_length=100)
+
+
+class Aboutus(models.Model):
+    class Meta:
+        verbose_name = u'网站信息'
+    build_person = models.CharField(verbose_name=u'开发人员', max_length=200)
+    text = models.TextField(verbose_name=u'网站信息', blank=True, null=True)

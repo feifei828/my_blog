@@ -13,6 +13,14 @@
     <link rel="stylesheet" href="/static/css/simple-line-icons.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/font.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/app.css" type="text/css" />
+    <link href="/static/css/select2.min.css" rel="stylesheet">
+    <style type="text/css">
+        a:link {color: #00CCFF} /* 未访问的链接 */
+        a:visited {color: #00CCFF} /* 已访问的链接 */
+        a:hover {color: #33FF66} /* 鼠标移动到链接上 */
+        a:active {color: #990000} /* 选定的链接 */
+    </style>
+
 </head>
 <body>
 <div class="app app-header-fixed" id="app">
@@ -60,7 +68,7 @@
                         <span class="hidden-sm hidden-md">欢迎您:{{ request.user }}</span>
                         <ul class="dropdown-menu animated fadeInRight w">
                             <li>
-                                <a href>
+                                <a href="/backend_admin">
                                     <span>设置</span>
                                 </a>
                             </li>
@@ -69,15 +77,11 @@
                                 <a href="/logout">退出</a>
                             </li>
                         </ul>
-                        <!-- / dropdown -->
                     </a>
                 </li>
             </ul>
-            <!-- / navbar right -->
         </div>
-        <!-- / navbar collapse -->
     </div>
-    <!-- / navbar -->
 
     <!-- menu -->
     <div class="app-aside hidden-xs bg-dark">
@@ -107,7 +111,7 @@
                 <nav class="navi">
                     <ul class="nav">
                         <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                            <span>Navigation</span>
+                            <span>功能</span>
                         </li>
                         <li>
                             <a href="/backend_blog_list">
@@ -117,247 +121,42 @@
                         </li>
 
                         <li>
-                            <a>
-                                <i class="glyphicon glyphicon-calendar icon text-info-dker"></i>
-                                <span class="font-bold">Calendar</span>
+                            <a href="/backend_blog_create">
+                                <i class="glyphicon glyphicon-pencil icon text-info-dker"></i>
+                                <span class="font-bold">新建博客</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/backend_tags">
+                                <i class="glyphicon glyphicon-th-large icon text-success"></i>
+                                <span class="font-bold">标签管理</span>
                             </a>
                         </li>
 
                         <li>
                             <a href="/backend_messages">
-                                <b class="badge bg-info pull-right">9</b>
                                 <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
                                 <span class="font-bold">邮件</span>
                             </a>
                         </li>
 
-                        <li>
-                            <a href class="auto">
-                                <span class="pull-right text-muted">
-                                    <i class="fa fa-fw fa-angle-right text"></i>
-                                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                                </span>
-                                <i class="glyphicon glyphicon-th-large icon text-success"></i>
-                                <span class="font-bold">Apps</span>
-                            </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a>
-                                        <span>Apps</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Note</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <span>Contacts</span>
-                                    </a>
-                                </li>
-                                <li >
-                                    <a>
-                                        <span>Weather</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
                         <li class="line dk"></li>
 
                         <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                            <span>Components</span>
+                            <span>基础设置</span>
                         </li>
                         <li>
-                            <a href class="auto">
-                                <span class="pull-right text-muted">
-                                    <i class="fa fa-fw fa-angle-right text"></i>
-                                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                                </span>
-                                <b class="badge bg-info pull-right">3</b>
-                                <i class="glyphicon glyphicon-th"></i>
-                                <span>Layout</span>
+                            <a href="/backend_admin" class="auto">
+                                <i class="glyphicon glyphicon-wrench"></i>
+                                <span>个人信息</span>
                             </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a href>
-                                        <span>Layout</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Application</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Full width</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Mobile</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href class="auto">
-                                <span class="pull-right text-muted">
-                                    <i class="fa fa-fw fa-angle-right text"></i>
-                                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                                </span>
                                 <i class="glyphicon glyphicon-briefcase icon"></i>
-                                <span>UI Kits</span>
+                                <span>网站介绍</span>
                             </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a href>
-                                        <span>UI Kits</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <span>Buttons</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <b class="badge bg-info pull-right">3</b>
-                                        <span>Icons</span>
-                                    </a>
-                                </li>
-                                <li >
-                                    <a>
-                                        <span>Grid</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li>
-                            <a href class="auto">
-                                <span class="pull-right text-muted">
-                                    <i class="fa fa-fw fa-angle-right text"></i>
-                                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                                </span>
-                                <b class="label bg-primary pull-right">2</b>
-                                <i class="glyphicon glyphicon-list"></i>
-                                <span >Table</span>
-                            </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a href>
-                                        <span>Table</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span >Table static</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Datatable</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Footable</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>ngGrid</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href class="auto">
-                                <span class="pull-right text-muted">
-                                    <i class="fa fa-fw fa-angle-right text"></i>
-                                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                                </span>
-                                <i class="glyphicon glyphicon-edit"></i>
-                                <span>Form</span>
-                            </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a href>
-                                        <span>Form</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Form elements</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Form validation</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Form wizard</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>File upload</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <span>Image crop</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li >
-                            <a>
-                                <i class="glyphicon glyphicon-signal"></i>
-                                <span>Chart</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href class="auto">
-                                <span class="pull-right text-muted">
-                                    <i class="fa fa-fw fa-angle-right text"></i>
-                                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                                </span>
-                                <i class="glyphicon glyphicon-file icon"></i>
-                                <span>Pages</span>
-                            </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a href>
-                                        <span>Pages</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Post</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Search</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span>Invoice</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <li class="line dk hidden-folded"></li>
@@ -368,7 +167,7 @@
                         <li>
                             <a href="/home">
                                 <i class="icon-user icon text-success-lter"></i>
-                                <span>BLOG主页</span>
+                                <span>返回BLOG主页</span>
                             </a>
                         </li>
                         <li>
@@ -380,25 +179,6 @@
                     </ul>
                 </nav>
                 <!-- nav -->
-
-                <!-- aside footer -->
-                <div class="wrapper m-t">
-                    <div class="text-center-folded">
-                        <span class="pull-right pull-none-folded">60%</span>
-                        <span class="hidden-folded">Milestone</span>
-                    </div>
-                    <div class="progress progress-xxs m-t-sm dk">
-                        <div class="progress-bar progress-bar-info" style="width: 60%;"></div>
-                    </div>
-                    <div class="text-center-folded">
-                        <span class="pull-right pull-none-folded">35%</span>
-                        <span class="hidden-folded">Release</span>
-                    </div>
-                    <div class="progress progress-xxs m-t-sm dk">
-                        <div class="progress-bar progress-bar-primary" style="width: 35%;"></div>
-                    </div>
-                </div>
-                <!-- / aside footer -->
             </div>
         </div>
     </div>
@@ -426,8 +206,10 @@
     <!-- / footer -->
 </div>
 <!-- jQuery -->
+<script type="text/javascript" src="http://7d9qwy.com2.z0.glb.qiniucdn.com/js/select2.min.js"></script>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/select2.min.js"></script>
 <script type="text/javascript">
     +function ($) {
         $(function(){
