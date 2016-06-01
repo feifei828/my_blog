@@ -9,17 +9,18 @@
                         <div class="form-group">
                             <div class="col-md-10">
                                 <label class="col-md-1">标题:</label>
-                                <input type="text" class="col-md-5" name="title" value="{{ form.title.value }}">
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="title" value="{{ form.title.value }}">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10">
                                 <label class="col-md-1">标签:</label>
-                                <select class="col-md-5 js-example-basic-multiple" multiple="multiple">
+                                <select class="col-md-5 tag-choice-multiple" multiple="multiple">
                                     {% for t in article.tag.all %}
                                         <option value="{{ t.id }}" selected="selected">{{ t }}</option>a
                                     {% endfor %}
-                                    <option value="WY">Wyoming</option>
                                 </select>
                             </div>
                         </div>
@@ -59,8 +60,27 @@
 
 {% endblock content %}
 {% block more_script %}
-    <script type="text/javascript" src="http://7d9qwy.com2.z0.glb.qiniucdn.com/js/select2.min.js"></script>
+    <script type="text/javascript" src="/static/js/select2.min.js"></script>
     <script type="text/javascript">
-    $(".js-example-basic-multiple").select2();
+
+    $(".tag-choice-multiple").select2({
+        multiple: true,
+        ajax: {
+            url: '/backend_tag_choice/',
+            dataType: "json",
+            data: function (params) {
+                return {
+                    q: params.term,
+                };
+            },
+            processResults: function (data, params) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+
     </script>
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base_backend.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10">
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>标签</th>
+                                <th>引用次数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {% for tag in tags %}
+                            <tbody>
+                            <tr>
+                                <td>{{ tag.id }}</td>
+                                <td>{{ tag.name }}</td>
+                                <td>{{ tag.count }}</td>
+                                <td><a href="/backend_tag_delete/{{ tag.id }}">删除</a></td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+
+                    </table>
+                </div>
+                <div class="col-md-10">
+                    <div class="col-sm-2 col-sm-offset-10">
+                        <a class="btn btn-info btn-block" href="/backend_tags_create" role="button">新增</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

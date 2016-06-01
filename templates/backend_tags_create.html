@@ -1,0 +1,21 @@
+{% extends 'base_backend.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-10">
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" method="POST" action="">
+                            <div class="form-group">
+                                <label class="col-md-2">标签名称:</label>
+                                <input class="col-md-4" name="tag_name">
+                            </div>
+                            <input type="submit" class="btn btn-info" value="保存">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,12 +1,18 @@
 # -*- coding: UTF-8 -*-
 
-from django.shortcuts import render
-from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Article
-from .models import Message
-from .models import Comment, Tags
+from django.shortcuts import redirect
+from django.shortcuts import render
+
 from .forms import MessageForm, CommentForm, ArticleForm, MessageReplyForm
+from .forms import PersonForm
+from .models import Article
+from .models import BlogTags
+from .models import Comment, Tags
+from .models import Message
+from .models import Person
+
+
 # Create your views here.
 
 
@@ -56,6 +62,7 @@ def about(request):
 
 
 def contact(request):
+    person = Person.objects.all()[0]
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -72,7 +79,8 @@ def contact(request):
 
     http_content = {
         'title': u'与我联系',
-        'form': form
+        'form': form,
+        'person': person,
     }
     return render(request, 'contact.html', http_content)
 
@@ -182,9 +190,12 @@ def backend_blog_create(request):
                 article.save()
                 return redirect('/backend_blog_list')
             except:
-                 return redirect('/backend_blog_create')
+                return redirect('/backend_blog_create')
 
-    return render(request, 'backend_blog_modify.html')
+    http_content = {
+        'title': u'新建博客',
+    }
+    return render(request, 'backend_blog_modify.html', http_content)
 
 
 def backend_messages(request):
@@ -204,7 +215,6 @@ def backend_messages_modify(request, message_id=None):
         form = MessageReplyForm(request.POST)
         if form.is_valid():
             message_info = form.cleaned_data
-            print(message_info)
             for k, v in message_info.iteritems():
                 setattr(message, k, v)
             message.save()
@@ -222,6 +232,100 @@ def backend_messages_modify(request, message_id=None):
     return render(request, 'backend_message_modify.html', http_content)
 
 
-def tag_choices(request):
+def backend_tags(request):
     tags = Tags.objects.all()
+    tags_info = []
 
+    for tag in tags:
+        tag_content = {}
+        count = BlogTags.objects.filter(tag_id=tag.id).count()
+        tag_content['id'] = tag.id
+        tag_content['name'] = tag.tag_name
+        tag_content['count'] = count
+        tags_info.append(tag_content)
+
+    http_content = {
+        'title': u'标签管理',
+        'tags': tags_info,
+    }
+    return render(request, 'backend_tags.html', http_content)
+
+
+def backend_tags_create(request):
+    if request.method == 'POST':
+        tag_name = request.POST.get('tag_name')
+        try:
+            tag = Tags.objects.create(tag_name=tag_name)
+            tag.save()
+            return redirect('/backend_tags')
+        except:
+            return redirect('/backend_tags_create')
+
+    http_content = {
+        'title': u'新建标签'
+    }
+    return render(request, 'backend_tags_create.html', http_content)
+
+
+def backend_tag_delete(request, tag_id=None):
+    tag = Tags.objects.get(id=tag_id)
+    tag.delete()
+    return redirect('/backend_tags')
+
+
+def backend_tag_choice(request):
+    tags =Tags.objects.all()
+    data = []
+    for tag in tags:
+        tag_data = {
+            'id': tag.id,
+            'text': tag.tag_name
+        }
+        data.append(tag_data)
+    return data
+
+
+def backend_admin(request):
+    try:
+        person = Person.objects.all()[0]
+    except:
+        person = Person
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            person_info = form.cleaned_data
+            try:
+                for k, v in person_info.iteritems():
+                    setattr(person, k, v)
+                person.save()
+                return redirect('/backend_admin_save/1')
+            except:
+                return redirect('/backend_admin_save/0')
+    else:
+        form_info = {
+            'name': person.name,
+            'email': person.email,
+            'phone': person.phone,
+            'qq': person.qq,
+            'weibo': person.weibo,
+            'github': person.github,
+        }
+        form = PersonForm(form_info)
+
+    http_content = {
+        'title': u'个人信息',
+        'form': form,
+    }
+    return render(request, 'backend_admin.html', http_content)
+
+
+def backend_admin_save(request, type_id=None):
+    if type_id:
+        type = u'保存成功 ^_^'
+    else:
+        type = u'保存失败 T_T'
+    http_content = {
+        'title': u'个人信息',
+        'type': type
+    }
+    return render(request, 'backend_admin_save.html', http_content)
