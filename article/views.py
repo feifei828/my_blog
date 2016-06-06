@@ -3,15 +3,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.shortcuts import render
-
+from django.http import JsonResponse
+from django.db.models import Q
 from .forms import MessageForm, CommentForm, ArticleForm, MessageReplyForm
-from .forms import PersonForm
-from .models import Article
-from .models import BlogTags
+from .forms import PersonForm, WebintroduceForm
+from .models import Article, BlogTags
 from .models import Comment, Tags
-from .models import Message
-from .models import Person
-
+from .models import Message, Person
+from .models import Aboutus, City
 
 # Create your views here.
 
@@ -57,8 +56,13 @@ def home(request):
 
 
 def about(request):
-
-    return render(request, 'about.html')
+    about_us = Aboutus.objects.all()[0]
+    person = about_us.build_person.split(',')
+    http_content = {
+        'about_us': about_us,
+        'person' : person
+    }
+    return render(request, 'about.html', http_content)
 
 
 def contact(request):
@@ -156,46 +160,62 @@ def backend_blog_list(request):
 
 def backend_blog_modify(request, article_id=None):
     if article_id is not None:
+        action = 'edit'
         article = Article.objects.get(id=article_id)
+    else:
+        article = None
+        action = 'create'
 
     if request.method == 'POST':
         form = ArticleForm(request.POST)
+        tags = request.POST.getlist('tags')
+        new_tags = set(Tags.objects.filter(id__in=tags))
+        if action == 'edit':
+            old_tags = set(article.tag.all())
+        else:
+            old_tags = set([])
+        add_tags = new_tags - old_tags
+        delete_tags = old_tags - new_tags
         if form.is_valid():
             article_info = form.cleaned_data
-            for k, v in article_info.iteritems():
-                setattr(article, k, v)
-            article.save()
+            article_info['city_id'] = article_info.pop('city')
+            try:
+                if action == 'edit':
+                    for k, v in article_info.iteritems():
+                        setattr(article, k, v)
+                else:
+                    article = Article.objects.create(**article_info)
+                for add_tag in add_tags:
+                    BlogTags.objects.create(article_id=article.id, tag=add_tag)
+                for delete_tag in delete_tags:
+                    BlogTags.objects.filter(article_id=article_id, tag=delete_tag).delete()
+                article.save()
+                return redirect('/backend_save/?title=3&state=1')
+            except:
+                return redirect('/backend_save/?title=3&state=0')
     else:
-        form_content = {
-            'title': article.title,
-            'is_topic': article.is_topic,
-            'content': article.content,
-        }
-        form = ArticleForm(form_content)
+        if action == 'edit':
+            form_content = {
+                'title': article.title,
+                'is_topic': article.is_topic,
+                'content': article.content,
+            }
+            form = ArticleForm(form_content)
+        else:
+            form = ArticleForm()
     http_content = {
-        'title': u'博客详情',
+        'title': u'新建博客' if article_id is None else u'博客详情',
         'article': article,
         'form': form,
+        'action': action,
     }
     return render(request, 'backend_blog_modify.html', http_content)
 
 
-def backend_blog_create(request):
-    if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            article_info = form.cleaned_data
-            try:
-                article = Article.objects.create(**article_info)
-                article.save()
-                return redirect('/backend_blog_list')
-            except:
-                return redirect('/backend_blog_create')
-
-    http_content = {
-        'title': u'新建博客',
-    }
-    return render(request, 'backend_blog_modify.html', http_content)
+def backend_blog_delete(request, blog_id=None):
+    blog = Article.objects.get(id=blog_id)
+    blog.delete()
+    return redirect('/backend_blog_list/')
 
 
 def backend_messages(request):
@@ -274,7 +294,9 @@ def backend_tag_delete(request, tag_id=None):
 
 
 def backend_tag_choice(request):
-    tags =Tags.objects.all()
+    q = request.GET.get('q', '')
+    qry = Q(tag_name__contains=q)
+    tags = Tags.objects.filter(qry)
     data = []
     for tag in tags:
         tag_data = {
@@ -282,7 +304,21 @@ def backend_tag_choice(request):
             'text': tag.tag_name
         }
         data.append(tag_data)
-    return data
+    return JsonResponse(data, safe=False)
+
+
+def backend_city_choice(request):
+    q = request.GET.get('q', '')
+    qry = Q(city_name__contains=q)
+    citys = City.objects.filter(qry)
+    data = []
+    for city in citys:
+        city_data = {
+            'id': city.id,
+            'text': city.city_name
+        }
+        data.append(city_data)
+    return JsonResponse(data, safe=False)
 
 
 def backend_admin(request):
@@ -298,9 +334,9 @@ def backend_admin(request):
                 for k, v in person_info.iteritems():
                     setattr(person, k, v)
                 person.save()
-                return redirect('/backend_admin_save/1')
+                return redirect('/backend_save/?title=1&state=1')
             except:
-                return redirect('/backend_admin_save/0')
+                return redirect('/backend_save/?title=1&state=0')
     else:
         form_info = {
             'name': person.name,
@@ -319,13 +355,65 @@ def backend_admin(request):
     return render(request, 'backend_admin.html', http_content)
 
 
-def backend_admin_save(request, type_id=None):
-    if type_id:
+def backend_save(request):
+    title = request.GET.get('title', '')
+    state = request.GET.get('state', '')
+    title_info = {
+        '1': u'个人信息',
+        '2': u'网站介绍',
+        '3': u'博客详情',
+    }
+    if state:
         type = u'保存成功 ^_^'
     else:
         type = u'保存失败 T_T'
     http_content = {
-        'title': u'个人信息',
+        'title': title_info[title],
         'type': type
     }
     return render(request, 'backend_admin_save.html', http_content)
+
+
+def backend_aboutus(request):
+    try:
+        about_us = Aboutus.objects.all()[0]
+        action = 'edit'
+    except:
+        action = 'create'
+
+    if request.method == 'POST':
+        form = WebintroduceForm(request.POST)
+        if form.is_valid():
+            introduce_info = form.cleaned_data
+            person1 = introduce_info.pop('person1')
+            person2 = introduce_info.pop('person2')
+            person3 = introduce_info.pop('person3')
+            introduce_info['build_person'] = person1 + ',' + person2 + ',' + person3
+            try:
+                if action == 'create':
+                    create_introduce = Aboutus.objects.create(**introduce_info)
+                    create_introduce.save()
+                else:
+                        for k, v in introduce_info.iteritems():
+                            setattr(about_us, k, v)
+                        about_us.save()
+                return redirect('/backend_save/?title=2&state=1')
+            except:
+                return redirect('/backend_save/?title=2&state=0')
+    else:
+        if action == 'edit':
+            person = about_us.build_person.split(',')
+            form_content = {
+                'person1': person[0],
+                'person2': person[1],
+                'person3': person[2],
+                'text': about_us.text
+            }
+            form = WebintroduceForm(form_content)
+        else:
+            form = WebintroduceForm()
+    http_content = {
+        'title': u'网站介绍',
+        'form': form
+    }
+    return render(request, 'backend_aboutus.html', http_content)

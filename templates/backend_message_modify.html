@@ -8,37 +8,46 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="col-md-10">
-                                <label class="col-md-2">标题:</label>
-                                {{ message.title }}
+                                <label class="col-md-2 control-label">标题:</label>
+                                <div class="col-md-4 form-control-static">
+                                    {{ message.title }}
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10">
-                                <label class="col-md-2">创建日期:</label>
-                                <div class="col-md-4">
+                                <label class="col-md-2 control-label">创建日期:</label>
+                                <div class="col-md-4 form-control-static">
                                     {{ message.create_time|date:"Y /m /d H:i" }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10">
-                                <label class="col-md-2">内容:</label>
-                                {{ message.content }}
+                                <label class="col-md-2 control-label">内容:</label>
+                                <div class="col-md-4 form-control-static">
+                                    {{ message.content }}
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10">
-                                <label class="col-md-2">邮箱:</label>
-                                <a href="mailto:{{ message.email }}">{{ message.email }}</a>
+                                <label class="col-md-2 control-label">邮箱:</label>
+                                <div class="col-md-4 form-control-static">
+                                    <a href="mailto:{{ message.email }}">{{ message.email }}</a>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10">
-                                <label class="col-md-2">是否反馈:</label>
-                                <input class="col-md-1" name="is_reply" type="checkbox" {% if form.is_reply.value %} checked="checked"{% endif %}>
-                                <input type="submit" value="保存" class="col-md-1 btn btn-info">
+                                <label class="col-md-2 control-label">是否反馈:</label>
+                                <div class="col-md-4 form-control-static">
+                                    <input class="col-md-1" name="is_reply" type="checkbox" {% if form.is_reply.value %} checked="checked"{% endif %}>
+                                </div>
                             </div>
-
+                        </div>
+                        <div class="col-md-6 control-label">
+                            <input type="submit" value="保存" class="btn btn-info">
                         </div>
                     <br/>
                     <br/>

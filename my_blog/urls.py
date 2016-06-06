@@ -18,10 +18,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from article.views import home, about, contact, blog_list, blog_modify, backend_home, \
                             contact_success, contact_error, blog_login, blog_logout, \
-                            backend_blog_list, backend_blog_modify, backend_blog_create, \
+                            backend_blog_list, backend_blog_modify, backend_blog_delete,\
                             backend_messages, backend_messages_modify, backend_tags, \
                             backend_admin, backend_tags_create, backend_tag_delete, \
-                            backend_admin_save, backend_tag_choice
+                            backend_save, backend_tag_choice, backend_aboutus, \
+                            backend_city_choice
 
 import settings
 
@@ -41,7 +42,8 @@ urlpatterns = [
     url(r'^backend_home/$', backend_home),
     url(r'^backend_blog_list/$', backend_blog_list),
     url(r'^backend_blog_modify/(.+)$', backend_blog_modify),
-    url(r'^backend_blog_create/$', backend_blog_create),
+    url(r'^backend_blog_create/$', backend_blog_modify),
+    url(r'^backend_blog_delete/(.+)$', backend_blog_delete),
     url(r'^backend_messages/$', backend_messages),
     url(r'^backend_message_modify/(.+)$', backend_messages_modify),
     url(r'^backend_tags/$', backend_tags),
@@ -49,5 +51,8 @@ urlpatterns = [
     url(r'^backend_tag_delete/(.+)/$', backend_tag_delete),
     url(r'^backend_tag_choice/$', backend_tag_choice),
     url(r'^backend_admin/$', backend_admin),
-    url(r'^backend_admin_save/(.+)/$', backend_admin_save),
+    url(r'^backend_save/$', backend_save),
+    url(r'^backend_aboutus/$', backend_aboutus),
+    url(r'^backend_city_choice/$', backend_city_choice),
+
 ]
