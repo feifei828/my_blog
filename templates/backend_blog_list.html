@@ -14,6 +14,7 @@
                                 <th>是否至于首页</th>
                                 <th>位置</th>
                                 <th>评论数</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         {% for article in articles %}
@@ -25,6 +26,7 @@
                                 <td>{% if article.is_topic %}是{% else %}否{% endif %}</td>
                                 <td>{{ article.city.province.province_name }}-{{ article.city }}</td>
                                 <td>{{ article.comment.all.count }}</td>
+                                <td><a href="/backend_blog_delete/{{ article.id }}">删除</a></td>
                             </tr>
                         </tbody>
                         {% endfor %}

@@ -20,6 +20,7 @@ class CommentForm(forms.Form):
 
 class ArticleForm(forms.Form):
     title = forms.CharField(label=u'博客标题', initial='')
+    city = forms.CharField(label=u'城市', initial='', required=False)
     is_topic = forms.BooleanField(label=u'是否置于首页', initial='', required=False)
     content = forms.CharField(label=u'博客内容', initial='')
 
@@ -40,3 +41,10 @@ class PersonForm(forms.Form):
     qq = forms.CharField(label=u'qq', initial='', required=False)
     weibo = forms.CharField(label=u'微博地址', initial='', required=False)
     github = forms.CharField(label=u'github', initial='', required=False)
+
+
+class WebintroduceForm(forms.Form):
+    person1 = forms.CharField(label=u'姓名', initial='')
+    person2 = forms.CharField(label=u'姓名', initial='', required=False)
+    person3 = forms.CharField(label=u'姓名', initial='', required=False)
+    text = forms.CharField(label=u'简介', initial='')
