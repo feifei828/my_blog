@@ -6,9 +6,10 @@
             <div class="col-md-10">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        BLOG后台管理系统
+                        <div class="col-md-11">BLOG后台管理系统</div>
+                        <a id="id_hid">设置</a>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" id="id_panel_body">
                         <p>1:本后台系统仅限于管理员使用。</p>
                         <p>2:使用完毕请退出登陆。</p>
                     </div>
@@ -18,3 +19,16 @@
     </div>
 
 {% endblock content %}
+
+{% block more_script %}
+    <script>
+        $('#id_hid').on('click',function(){
+            if($('#id_panel_body').is(":visible")){
+                $('#id_panel_body').hide();
+            }
+            else{
+                $('#id_panel_body').show();
+            }
+        })
+    </script>
+{% endblock more_script %}
