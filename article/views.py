@@ -245,7 +245,7 @@ def backend_messages_modify(request, message_id=None):
         form = MessageReplyForm(form_content)
 
     http_content = {
-        'title': u'消息详情',
+        'title': u'邮件详情',
         'message': message,
         'form': form
     }
